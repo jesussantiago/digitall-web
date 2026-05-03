@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digit-all × NIC México — Soluciones Multinube</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --dark:#0a0e1a;
+    --dark2:#0f1629;
+    --dark3:#141c35;
+    --blue:#2563eb;
+    --blue2:#3b82f6;
+    --cyan:#06b6d4;
+    --text:#e2e8f0;
+    --muted:#94a3b8;
+    --border:rgba(99,102,241,0.2);
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,26,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+  .nav-brand{display:flex;align-items:center;gap:1rem;}
+  .nav-logo{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:-0.5px;}
+  .nav-logo span{color:var(--blue2);}
+  .nav-sep{width:1px;height:20px;background:var(--border);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;transition:color .2s;}
+  .nav-links a:hover{color:#fff;}
+  .nav-cta{background:var(--blue);color:#fff;border:none;padding:.5rem 1.25rem;border-radius:8px;font-size:.875rem;cursor:pointer;transition:background .2s;}
+  .nav-cta:hover{background:var(--blue2);}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden;}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.07) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.4);border-radius:100px;padding:.4rem 1rem;font-size:.8rem;color:var(--blue2);margin-bottom:2rem;}
+  .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+  h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.1;letter-spacing:-2px;color:#fff;max-width:900px;margin-bottom:1.5rem;}
+  h1 .accent{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero-sub{font-size:1.15rem;color:var(--muted);max-width:600px;line-height:1.7;margin-bottom:2.5rem;}
+  .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+  .btn-primary{background:var(--blue);color:#fff;border:none;padding:.875rem 2rem;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;}
+  .btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2);padding:.875rem 2rem;border-radius:10px;font-size:1rem;cursor:pointer;transition:all .2s;}
+  .btn-ghost:hover{border-color:var(--blue2);color:var(--blue2);}
+  .hero-stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;justify-content:center;}
+  .stat{text-align:center;}
+  .stat-num{font-size:2rem;font-weight:800;color:#fff;}
+  .stat-num span{color:var(--blue2);}
+  .stat-label{font-size:.8rem;color:var(--muted);margin-top:.25rem;}
+
+  /* SECCIÓN PROBLEMA */
+  section{padding:5rem 2rem;}
+  .container{max-width:1100px;margin:0 auto;}
+  .section-label{font-size:.75rem;text-transform:uppercase;letter-spacing:3px;color:var(--blue2);margin-bottom:1rem;}
+  .section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:1rem;letter-spacing:-1px;}
+  .section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:600px;}
+
+  .problema-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem;}
+  .problema-card{background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+  .problema-icon{font-size:1.5rem;margin-bottom:1rem;}
+  .problema-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+  .problema-card p{font-size:.875rem;color:var(--muted);line-height:1.6;}
+
+  /* SERVICIOS */
+  .servicios-bg{background:var(--dark2);}
+  .servicios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+  .servicio-card{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:all .25s;cursor:default;position:relative;overflow:hidden;}
+  .servicio-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));opacity:0;transition:opacity .25s;}
+  .servicio-card:hover{border-color:rgba(59,130,246,.5);transform:translateY(-4px);}
+  .servicio-card:hover::before{opacity:1;}
+  .servicio-icon{width:44px;height:44px;background:rgba(37,99,235,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.25rem;}
+  .servicio-card h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+  .servicio-card p{font-size:.875rem;color:var(--muted);line-height:1.6;}
+  .servicio-tag{display:inline-block;margin-top:1rem;font-size:.7rem;background:rgba(37,99,235,.15);color:var(--blue2);padding:.25rem .75rem;border-radius:100px;border:1px solid rgba(37,99,235,.3);}
+
+  /* DIFERENCIADORES */
+  .diferenciadores-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3rem;}
+  @media(max-width:700px){.diferenciadores-grid{grid-template-columns:1fr;}}
+  .dif-list{display:flex;flex-direction:column;gap:1.25rem;}
+  .dif-item{display:flex;gap:1rem;align-items:flex-start;}
+  .dif-check{width:24px;height:24px;background:rgba(6,182,212,.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;margin-top:2px;color:var(--cyan);}
+  .dif-item h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.25rem;}
+  .dif-item p{font-size:.85rem;color:var(--muted);line-height:1.6;}
+  .dif-visual{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+  .metric-row{display:flex;justify-content:space-between;align-items:center;padding:.875rem 0;border-bottom:1px solid var(--border);}
+  .metric-row:last-child{border-bottom:none;}
+  .metric-label{font-size:.875rem;color:var(--muted);}
+  .metric-val{font-size:1.5rem;font-weight:800;color:#fff;}
+  .metric-val span{font-size:.875rem;color:var(--cyan);margin-left:.25rem;}
+
+  /* CASOS */
+  .casos-bg{background:var(--dark2);}
+  .casos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+  .caso-card{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:1.75rem;}
+  .caso-industry{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--blue2);margin-bottom:1rem;}
+  .caso-card h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.75rem;}
+  .caso-challenge{font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;}
+  .caso-results{display:flex;gap:1rem;flex-wrap:wrap;}
+  .caso-result{background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);border-radius:8px;padding:.5rem .875rem;text-align:center;}
+  .caso-result-num{font-size:1.25rem;font-weight:800;color:#fff;display:block;}
+  .caso-result-label{font-size:.7rem;color:var(--muted);}
+
+  /* PARTNERS */
+  .partners-row{display:flex;align-items:center;justify-content:center;gap:3rem;margin-top:3rem;flex-wrap:wrap;}
+  .partner-badge{background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:1rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+  .partner-name{font-size:1rem;font-weight:700;color:#fff;}
+  .partner-sub{font-size:.75rem;color:var(--muted);}
+  .partner-cloud-aws{color:#f90;}
+  .partner-cloud-azure{color:#0078d4;}
+  .partner-cloud-gcp{color:#4285f4;}
+
+  /* CTA FINAL */
+  .cta-section{text-align:center;padding:6rem 2rem;}
+  .cta-box{max-width:750px;margin:0 auto;background:var(--dark2);border:1px solid rgba(37,99,235,.4);border-radius:20px;padding:4rem 3rem;}
+  .cta-box h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem;letter-spacing:-1px;}
+  .cta-box p{color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+  .form-input{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:.875rem 1rem;color:#fff;font-size:.9rem;width:100%;outline:none;transition:border .2s;}
+  .form-input:focus{border-color:var(--blue2);}
+  .form-input::placeholder{color:var(--muted);}
+  select.form-input option{background:var(--dark3);}
+  .form-submit{width:100%;background:var(--blue);color:#fff;border:none;padding:1rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:all .2s;}
+  .form-submit:hover{background:var(--blue2);}
+  .form-note{font-size:.8rem;color:var(--muted);margin-top:.75rem;}
+
+  /* FOOTER */
+  footer{background:var(--dark2);border-top:1px solid var(--border);padding:2rem;text-align:center;}
+  footer p{color:var(--muted);font-size:.85rem;}
+  footer span{color:var(--blue2);}
+
+  /* SUCCESS */
+  .success-msg{display:none;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;color:var(--cyan);margin-top:1rem;font-size:.95rem;}
+
+  @media(max-width:768px){
+    nav{padding:.75rem 1rem;}
+    .nav-links{display:none;}
+    .hero-stats{gap:1.5rem;}
+    .cta-box{padding:2rem 1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">D<span>//</span> Digit-all</span>
+    <div class="nav-sep"></div>
+    <span style="font-size:.85rem;color:var(--muted);">× NIC México</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#casos">Casos de éxito</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Agendar consultoría</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Partner certificado AWS · Azure · GCP
+    </div>
+    <h1>Tu nube debe<br><span class="accent">generar negocio.</span><br>Nosotros lo garantizamos.</h1>
+    <p class="hero-sub">No vendemos tecnología. Transformamos tu operación en ventaja competitiva medible con soluciones multinube diseñadas para escalar.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Agenda tu consultoría gratuita</button>
+      <button class="btn-ghost" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Ver soluciones</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">+<span>120</span></div><div class="stat-label">Proyectos entregados</div></div>
+      <div class="stat"><div class="stat-num"><span>40</span>%</div><div class="stat-label">Reducción de costos promedio</div></div>
+      <div class="stat"><div class="stat-num"><span>3</span>x</div><div class="stat-label">ROI en primer año</div></div>
+      <div class="stat"><div class="stat-num">+<span>50</span></div><div class="stat-label">Clientes en México</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section>
+  <div class="container">
+    <div class="section-label">El problema real</div>
+    <h2 class="section-title">¿Tu inversión en nube<br>realmente está rindiendo?</h2>
+    <p class="section-sub">El 70% de las empresas en México pagan por infraestructura cloud que no optimizan. Identificamos y eliminamos ese desperdicio.</p>
+    <div class="problema-grid">
+      <div class="problema-card">
+        <div class="problema-icon">💸</div>
+        <h3>Costos sin control</h3>
+        <p>Recursos sobredimensionados, licencias duplicadas y servicios activos sin uso real que se acumulan mes a mes.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">🐢</div>
+        <h3>Tiempo al mercado lento</h3>
+        <p>Procesos manuales y sin automatización que frenan la velocidad de tus equipos de desarrollo y operaciones.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">🔒</div>
+        <h3>Riesgos de seguridad</h3>
+        <p>Configuraciones incorrectas y ausencia de políticas de seguridad que exponen datos críticos del negocio.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">📉</div>
+        <h3>Sin visibilidad del ROI</h3>
+        <p>Tecnología implementada sin métricas de negocio que demuestren su impacto real en los resultados financieros.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="servicios-bg" id="servicios">
+  <div class="container">
+    <div class="section-label">Nuestras soluciones</div>
+    <h2 class="section-title">Valor que se mide<br>en resultados de negocio</h2>
+    <div class="servicios-grid">
+      <div class="servicio-card">
+        <div class="servicio-icon">☁️</div>
+        <h3>Migración a la nube</h3>
+        <p>Estrategia y ejecución end-to-end para mover tu infraestructura con cero tiempo de inactividad y riesgo controlado.</p>
+        <span class="servicio-tag">Lift & Shift · Replatform · Refactor</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">📈</div>
+        <h3>Infraestructura escalable</h3>
+        <p>Arquitecturas diseñadas para crecer contigo: alta disponibilidad, resiliencia y elasticidad desde el día uno.</p>
+        <span class="servicio-tag">Alta disponibilidad · Multi-región</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">🔄</div>
+        <h3>Modernización de aplicaciones</h3>
+        <p>Transformamos monolitos en arquitecturas modernas que reducen costos operativos y aceleran los ciclos de entrega.</p>
+        <span class="servicio-tag">Microservicios · Contenedores</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">⚡</div>
+        <h3>Serverless & Microservicios</h3>
+        <p>Paga solo por lo que usas. Arquitecturas event-driven que escalan automáticamente sin gestión de servidores.</p>
+        <span class="servicio-tag">Functions · Event-driven · APIs</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">🚀</div>
+        <h3>DevOps & CI/CD</h3>
+        <p>Pipelines automatizados que llevan tu código de desarrollo a producción en minutos con calidad garantizada.</p>
+        <span class="servicio-tag">GitHub Actions · Azure DevOps</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">🛡️</div>
+        <h3>Cloud Security</h3>
+        <p>Seguridad por diseño: Zero Trust, gestión de identidades, cumplimiento normativo y monitoreo continuo de amenazas.</p>
+        <span class="servicio-tag">Zero Trust · IAM · Compliance</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">🤖</div>
+        <h3>Inteligencia Artificial</h3>
+        <p>Integramos IA generativa y machine learning a tus procesos para automatizar decisiones y crear ventajas competitivas reales.</p>
+        <span class="servicio-tag">GenAI · ML · Chatbots · RAG</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">⚙️</div>
+        <h3>Automatización de procesos</h3>
+        <p>Eliminamos tareas repetitivas con automatizaciones inteligentes que liberan a tu equipo para lo que importa.</p>
+        <span class="servicio-tag">RPA · Workflows · Integrations</span>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icon">📋</div>
+        <h3>Infraestructura como Código</h3>
+        <p>Tu infraestructura versionada, reproducible y auditada. Terraform, Bicep y Ansible para entornos 100% consistentes.</p>
+        <span class="servicio-tag">Terraform · Bicep · Ansible</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIADORES -->
+<section id="nosotros">
+  <div class="container">
+    <div class="section-label">Por qué Digit-all</div>
+    <h2 class="section-title">No somos un proveedor más.<br>Somos tu equipo de cloud.</h2>
+    <div class="diferenciadores-grid">
+      <div class="dif-list">
+        <div class="dif-item">
+          <div class="dif-check">✓</div>
+          <div>
+            <h4>Partner certificado en los 3 grandes</h4>
+            <p>Certificaciones activas en AWS, Microsoft Azure y Google Cloud. Acceso a soporte técnico de nivel enterprise y roadmap de productos anticipado.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="dif-check">✓</div>
+          <div>
+            <h4>ROI medible, no promesas</h4>
+            <p>Cada proyecto inicia con una línea base de costos y KPIs de negocio. Al cierre entregamos un reporte de impacto financiero real.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="dif-check">✓</div>
+          <div>
+            <h4>Acompañamos todo el journey</h4>
+            <p>Desde la estrategia hasta la operación continua. No desaparecemos después de la implementación — somos tu partner de largo plazo.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="dif-check">✓</div>
+          <div>
+            <h4>Casos de éxito en México comprobados</h4>
+            <p>Más de 50 empresas mexicanas han transformado su operación con nosotros. Conocemos el contexto, la regulación y las necesidades del mercado local.</p>
+          </div>
+        </div>
+      </div>
+      <div class="dif-visual">
+        <div style="font-size:.8rem;color:var(--muted);margin-bottom:1.25rem;text-transform:uppercase;letter-spacing:2px;">Impacto promedio en clientes</div>
+        <div class="metric-row"><span class="metric-label">Reducción de costos operativos</span><span class="metric-val">40<span>%</span></span></div>
+        <div class="metric-row"><span class="metric-label">Mejora en time-to-market</span><span class="metric-val">3<span>x</span></span></div>
+        <div class="metric-row"><span class="metric-label">Disponibilidad de sistemas</span><span class="metric-val">99.9<span>%</span></span></div>
+        <div class="metric-row"><span class="metric-label">ROI promedio primer año</span><span class="metric-val">280<span>%</span></span></div>
+        <div class="metric-row"><span class="metric-label">Proyectos en tiempo y forma</span><span class="metric-val">96<span>%</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASOS DE ÉXITO -->
+<section class="casos-bg" id="casos">
+  <div class="container">
+    <div class="section-label">Casos de éxito</div>
+    <h2 class="section-title">Resultados reales,<br>empresas reales.</h2>
+    <div class="casos-grid">
+      <div class="caso-card">
+        <div class="caso-industry">Seguros · Azure</div>
+        <h3>Modernización de plataforma digital para aseguradora nacional</h3>
+        <p class="caso-challenge">Sistema legacy con caídas frecuentes en temporadas de alta demanda y costos de infraestructura crecientes sin control.</p>
+        <div class="caso-results">
+          <div class="caso-result"><span class="caso-result-num">62%</span><span class="caso-result-label">Reducción de costos</span></div>
+          <div class="caso-result"><span class="caso-result-num">0</span><span class="caso-result-label">Caídas en 12 meses</span></div>
+          <div class="caso-result"><span class="caso-result-num">4x</span><span class="caso-result-label">Velocidad de releases</span></div>
+        </div>
+      </div>
+      <div class="caso-card">
+        <div class="caso-industry">Manufactura · AWS + Azure</div>
+        <h3>Estrategia multinube para corporativo industrial con operaciones en 5 estados</h3>
+        <p class="caso-challenge">Silos de datos entre plantas, sin visibilidad en tiempo real de producción y dependencia total de un datacenter propio con alto costo de mantenimiento.</p>
+        <div class="caso-results">
+          <div class="caso-result"><span class="caso-result-num">45%</span><span class="caso-result-label">Ahorro en TI</span></div>
+          <div class="caso-result"><span class="caso-result-num">Real-time</span><span class="caso-result-label">Visibilidad producción</span></div>
+          <div class="caso-result"><span class="caso-result-num">8 sem</span><span class="caso-result-label">Tiempo de entrega</span></div>
+        </div>
+      </div>
+      <div class="caso-card">
+        <div class="caso-industry">Recursos Humanos · GCP + IA</div>
+        <h3>Asistente de IA para automatización de procesos de selección de personal</h3>
+        <p class="caso-challenge">Proceso de reclutamiento manual con tiempos de respuesta de semanas, pérdida de talento y costos elevados por rotación.</p>
+        <div class="caso-results">
+          <div class="caso-result"><span class="caso-result-num">70%</span><span class="caso-result-label">Menos tiempo en filtros</span></div>
+          <div class="caso-result"><span class="caso-result-num">3x</span><span class="caso-result-label">Más candidatos procesados</span></div>
+          <div class="caso-result"><span class="caso-result-num">ROI 6m</span><span class="caso-result-label">Retorno en 6 meses</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section>
+  <div class="container" style="text-align:center;">
+    <div class="section-label">Nuestros partners</div>
+    <h2 class="section-title" style="margin-bottom:.5rem;">Respaldados por los líderes globales</h2>
+    <p class="section-sub" style="margin:0 auto 0;">Certificaciones activas que garantizan acceso a tecnología de punta, precios preferenciales y soporte enterprise.</p>
+    <div class="partners-row">
+      <div class="partner-badge">
+        <span style="font-size:1.5rem;">&#9729;</span>
+        <span class="partner-name partner-cloud-aws">Amazon Web Services</span>
+        <span class="partner-sub">Select Partner</span>
+      </div>
+      <div class="partner-badge">
+        <span style="font-size:1.5rem;color:#0078d4;">&#9830;</span>
+        <span class="partner-name partner-cloud-azure">Microsoft Azure</span>
+        <span class="partner-sub">Solutions Partner</span>
+      </div>
+      <div class="partner-badge">
+        <span style="font-size:1.5rem;color:#4285f4;">&#9679;</span>
+        <span class="partner-name partner-cloud-gcp">Google Cloud</span>
+        <span class="partner-sub">Partner</span>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:1rem;background:var(--dark2);border:1px solid var(--border);border-radius:12px;display:inline-block;">
+      <span style="font-size:.875rem;color:var(--muted);">Un área de negocio de </span>
+      <span style="font-size:.875rem;font-weight:700;color:#fff;">NIC México</span>
+      <span style="font-size:.875rem;color:var(--muted);"> — líderes en conectividad y servicios digitales desde 1989</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACTO -->
+<section class="cta-section" id="contacto">
+  <div class="cta-box">
+    <div class="section-label" style="text-align:center;">Consultoría gratuita</div>
+    <h2>30 minutos que pueden cambiar<br>el rumbo de tu tecnología</h2>
+    <p>Sin compromisos. Sin ventas agresivas. Solo una conversación honesta sobre dónde está tu empresa y hacia dónde puede ir con la nube bien implementada.</p>
+    <div class="form-grid">
+      <input class="form-input" id="f-nombre" type="text" placeholder="Nombre completo">
+      <input class="form-input" id="f-empresa" type="text" placeholder="Empresa">
+      <input class="form-input" id="f-email" type="email" placeholder="Correo corporativo">
+      <input class="form-input" id="f-tel" type="tel" placeholder="Teléfono">
+    </div>
+    <select class="form-input" id="f-interes" style="margin-bottom:.5rem;">
+      <option value="" disabled selected>¿En qué área necesitas apoyo?</option>
+      <option>Migración a la nube</option>
+      <option>Reducción de costos cloud</option>
+      <option>DevOps / CI-CD</option>
+      <option>Seguridad cloud</option>
+      <option>Inteligencia Artificial</option>
+      <option>Infraestructura como Código</option>
+      <option>Estrategia multinube</option>
+      <option>Otro</option>
+    </select>
+    <button class="form-submit" onclick="submitForm()">Agendar mi consultoría gratuita →</button>
+    <p class="form-note">Tu información es confidencial y nunca será compartida con terceros.</p>
+    <div class="success-msg" id="success-msg">
+      ✓ ¡Listo! Recibimos tu solicitud. Un consultor de Digit-all se pondrá en contacto contigo en menos de 24 horas hábiles.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Digit-all</span> · Un área de negocio de NIC México · Todos los derechos reservados</p>
+  <p style="margin-top:.5rem;font-size:.75rem;">AWS, Azure y Google Cloud son marcas registradas de sus respectivos propietarios.</p>
+</footer>
+
+<script>
+function submitForm(){
+  const n=document.getElementById('f-nombre').value.trim();
+  const e=document.getElementById('f-empresa').value.trim();
+  const em=document.getElementById('f-email').value.trim();
+  const i=document.getElementById('f-interes').value;
+  if(!n||!e||!em||!i){alert('Por favor completa todos los campos requeridos.');return;}
+  const msg=document.getElementById('success-msg');
+  msg.style.display='block';
+  document.getElementById('f-nombre').value='';
+  document.getElementById('f-empresa').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-tel').value='';
+  document.getElementById('f-interes').selectedIndex=0;
+  msg.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
